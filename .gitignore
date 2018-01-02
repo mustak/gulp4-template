@@ -1,0 +1,14 @@
+# Project
+build
+
+_gulpfile.babel.js
+_package.json
+
+### Bower ###
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+
+# Node
+node_modules

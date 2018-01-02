@@ -1,0 +1,63 @@
+const _destinationFolder = 'build';
+const _src = 'src';
+export default {
+    PORT: 8000,
+    COMPATIBILITY: [
+        "last 2 versions",
+        "ie >= 9",
+        "ios >= 7"
+    ],
+    UNCSS_OPTIONS: {
+        html: ["src/**/*.html"],
+        ignore: [
+            "!!js/regexp .foundation-mq",
+            "!!js/regexp ^\.is-.*"
+        ]
+    },
+    WEBPACKCONFIG: {
+        module: {
+            rules: [
+                {
+                    test: /.js$/,
+                    use: [
+                        {
+                            loader: 'babel-loader'
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    PATHS: {
+        dist: _destinationFolder,
+        assets: {
+            src: [
+                "src/assets/**/*",
+                "!src/assets/scss",
+                "!src/assets/{img,js,scss}/**/*"
+            ],
+            dest: _destinationFolder
+        },
+        sass: {
+            resolve: [
+                "node_modules/foundation-sites/scss",
+                "node_modules/motion-ui/src"
+            ],
+            src: "src/assets/scss/app.scss",
+            dest: _destinationFolder + '/css'
+        },
+        //entries -> scripts
+        scripts: {
+            src: ["src/assets/js/app.js"],
+            dest: _destinationFolder + '/js'
+        },
+        html: {
+            src: ['src/pages/**/*.{html,hbs,handlebars}'],
+            dest: _destinationFolder
+        },
+        images: {
+            src: ['src/assets/img/**/*'],
+            dest: _destinationFolder + '/images'
+        }
+    }
+}

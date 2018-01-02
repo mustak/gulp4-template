@@ -1,0 +1,50 @@
+{
+  "name": "gulp34",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build --production",
+    "clean": "gulp clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mustak/gulp3-template.git"
+  },
+  "keywords": [
+    "gulp3",
+    "gulp4"
+  ],
+  "author": "mustak",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-clean-css": "^3.9.2",
+    "gulp-if": "^2.0.2",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uncss": "^1.0.6",
+    "panini": "^1.5.1",
+    "rimraf": "^2.6.2",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^3.10.0",
+    "webpack-stream": "^4.0.0",
+    "yargs": "^10.0.3"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "dependencies": {
+    "foundation-sites": "^6.4.4-rc1",
+    "motion-ui": "^1.2.3"
+  }
+}
