@@ -9,6 +9,7 @@ import panini from 'panini';
 import webpackStream from 'webpack-stream';
 import webpack3 from 'webpack';
 import named from 'vinyl-named';
+import browser from 'browser-sync';
 
 // Load all plugins using 'gulp-load-plugins'
 const $ = plugins();
@@ -79,9 +80,19 @@ gulp.task('images', ['copy'], () => {
       .pipe(gulp.dest(PATHS.images.dest));
   });
 
+  gulp.task('server',['build'], (done) => {
+    browser.init({
+      server: PATHS.dist, 
+      port: PORT,
+      notify: false
+    });
+    done();
+  });
+
+
 //pages, sass, javascript, images,
-gulp.task('build', ['clean', 'copy', 'html', 'sass','script']);
-gulp.task('default', ['build'], () => {
+gulp.task('build', ['clean', 'copy', 'images', 'html', 'sass','script']);
+gulp.task('default', ['build', 'server'], () => {
     console.log(WEBPACKCONFIG);
     return true;
 });
