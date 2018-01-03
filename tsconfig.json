@@ -1,0 +1,10 @@
+{
+    "include": [
+        "./src/assets/js/**/*"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "target": "es6",
+        "moduleResolution": "node"
+    }
+}

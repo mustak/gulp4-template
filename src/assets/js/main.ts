@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import * as $ from 'jquery';
 // import whatInput from 'what-input';
 
 // window.$ = $;

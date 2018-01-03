@@ -7,7 +7,7 @@ import rimraf from 'rimraf';
 import config from './config';
 import panini from 'panini';
 import webpackStream from 'webpack-stream';
-import webpack from 'webpack';
+import webpack3 from 'webpack';
 import named from 'vinyl-named';
 
 // Load all plugins using 'gulp-load-plugins'
@@ -63,13 +63,21 @@ gulp.task('script', ['copy'], () => {
     return gulp.src(PATHS.scripts.src)
         .pipe(named())
         .pipe($.sourcemaps.init())
-        .pipe(webpackStream(WEBPACKCONFIG, webpack))
+        .pipe(webpackStream(null, webpack3))
         .pipe($.if(PRODUCTION, $.uglify()
             .on('error', e => { console.log(e); })
         ))
         .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
         .pipe(gulp.dest(PATHS.scripts.dest));
 });
+
+gulp.task('images', ['copy'], () => {
+    return gulp.src(PATHS.images.src)
+      .pipe($.if(PRODUCTION, $.imagemin({
+        progressive: true
+      })))
+      .pipe(gulp.dest(PATHS.images.dest));
+  });
 
 //pages, sass, javascript, images,
 gulp.task('build', ['clean', 'copy', 'html', 'sass','script']);

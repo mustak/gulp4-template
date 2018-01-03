@@ -18,14 +18,26 @@ export default {
         module: {
             rules: [
                 {
-                    test: /.js$/,
+                    test: /\.ts(x?)$/,
+                    exclude: /node_modules/,
+                    use: [
+                        {
+                            loader: 'babel-loader'
+                        },
+                        {
+                            loader: 'ts-loader'
+                        }
+                    ]
+                },
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
                     use: [
                         {
                             loader: 'babel-loader'
                         }
                     ]
-                }
-            ]
+                }]
         }
     },
     PATHS: {
@@ -48,7 +60,10 @@ export default {
         },
         //entries -> scripts
         scripts: {
-            src: ["src/assets/js/app.js"],
+            src: [
+                //"src/assets/js/app.js",
+                "src/assets/js/main.ts"
+            ],
             dest: _destinationFolder + '/js'
         },
         html: {
