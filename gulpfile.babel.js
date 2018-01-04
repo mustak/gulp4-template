@@ -11,26 +11,21 @@ import webpack3 from 'webpack';
 import named from 'vinyl-named';
 import browser from 'browser-sync';
 
-// Load all plugins using 'gulp-load-plugins'
 const $ = plugins();
-// Check --production flag
 const PRODUCTION = !!(yargs.argv.production);
-// Destructure  settings from config.js
 const { COMPATIBILITY, PORT, UNCSS_OPTIONS, PATHS, WEBPACKCONFIG } = config;
 
-// Delete the PATHS.dist folder for evey build
-gulp.task('clean', (done) => {
+// Setup Tasks
+function clean(done) {
     rimraf(PATHS.dist, done);
-});
-// Copy the contents of PATHS.assets folder
-// NOTE: task depends on 'clean' task
-gulp.task('copy', ['clean'], () => {
+}
+function copy (){
     return gulp.src(PATHS.assets.src)
         .pipe(gulp.dest(PATHS.assets.dest));
-});
+}
 
-// Generate the html pages
-gulp.task('html', ['copy'], () => {
+// Main Tasks
+function html(){
     return gulp.src(PATHS.html.src)
         .pipe(panini({
             root: 'src/pages/',
@@ -40,10 +35,9 @@ gulp.task('html', ['copy'], () => {
             helpers: 'src/helpers/'
         }))
         .pipe(gulp.dest(PATHS.html.dest));
-});
+}
 
-// In production, the CSS is compressed
-gulp.task('sass', ['copy'], () => {
+function sass(){
     return gulp.src(PATHS.sass.src)
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -52,15 +46,13 @@ gulp.task('sass', ['copy'], () => {
         .pipe($.autoprefixer({
             browsers: COMPATIBILITY
         }))
-        // uncomment to run UnCSS in production
         //.pipe($.if(PRODUCTION, $.uncss(UNCSS_OPTIONS)))
         .pipe($.if(PRODUCTION, $.cleanCss({ compatibility: 'ie9' })))
         .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
         .pipe(gulp.dest(PATHS.sass.dest))
-    //.pipe(browser.reload({ stream: true }));
-});
+}
 
-gulp.task('script', ['copy'], () => {
+function script(){
     return gulp.src(PATHS.scripts.src)
         .pipe(named())
         .pipe($.sourcemaps.init())
@@ -70,29 +62,28 @@ gulp.task('script', ['copy'], () => {
         ))
         .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
         .pipe(gulp.dest(PATHS.scripts.dest));
-});
+}
 
-gulp.task('images', ['copy'], () => {
+function images(){
     return gulp.src(PATHS.images.src)
-      .pipe($.if(PRODUCTION, $.imagemin({
-        progressive: true
-      })))
-      .pipe(gulp.dest(PATHS.images.dest));
-  });
+        .pipe($.if(PRODUCTION, $.imagemin({
+            progressive: true
+        })))
+        .pipe(gulp.dest(PATHS.images.dest));
+}
 
-  gulp.task('server',['build'], (done) => {
+// Dev Tasks
+function server(done){
     browser.init({
-      server: PATHS.dist, 
-      port: PORT,
-      notify: false
+        server: PATHS.dist,
+        port: PORT,
+        notify: false
     });
     done();
-  });
+}
 
 
-//pages, sass, javascript, images,
-gulp.task('build', ['clean', 'copy', 'images', 'html', 'sass','script']);
-gulp.task('default', ['build', 'server'], () => {
-    console.log(WEBPACKCONFIG);
-    return true;
-});
+gulp.task('build',
+    gulp.series(clean, gulp.parallel(html, sass, script, images, copy)));
+
+gulp.task('default', gulp.series('build', server));
