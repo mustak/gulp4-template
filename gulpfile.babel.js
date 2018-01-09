@@ -19,13 +19,13 @@ const { COMPATIBILITY, PORT, UNCSS_OPTIONS, PATHS, WEBPACKCONFIG } = config;
 function clean(done) {
     rimraf(PATHS.dist, done);
 }
-function copy (){
+function copy() {
     return gulp.src(PATHS.assets.src)
         .pipe(gulp.dest(PATHS.assets.dest));
 }
 
 // Main Tasks
-function html(){
+function html() {
     return gulp.src(PATHS.html.src)
         .pipe(panini({
             root: 'src/pages/',
@@ -37,7 +37,7 @@ function html(){
         .pipe(gulp.dest(PATHS.html.dest));
 }
 
-function sass(){
+function sass() {
     return gulp.src(PATHS.sass.src)
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -52,11 +52,11 @@ function sass(){
         .pipe(gulp.dest(PATHS.sass.dest))
 }
 
-function script(){
+function script() {
     return gulp.src(PATHS.scripts.src)
         .pipe(named())
-        .pipe($.sourcemaps.init())
         .pipe(webpackStream(null, webpack3))
+        .pipe($.sourcemaps.init())
         .pipe($.if(PRODUCTION, $.uglify()
             .on('error', e => { console.log(e); })
         ))
@@ -64,7 +64,7 @@ function script(){
         .pipe(gulp.dest(PATHS.scripts.dest));
 }
 
-function images(){
+function images() {
     return gulp.src(PATHS.images.src)
         .pipe($.if(PRODUCTION, $.imagemin({
             progressive: true
@@ -73,7 +73,7 @@ function images(){
 }
 
 // Dev Tasks
-function server(done){
+function server(done) {
     browser.init({
         server: PATHS.dist,
         port: PORT,
@@ -81,9 +81,21 @@ function server(done){
     });
     done();
 }
-
+function reload(done) {
+    browser.reload();
+    done();
+}
+function watchTasks() {
+    wTask(PATHS.assets.src, copy);
+    wTask(PATHS.images.src, images);
+    wTask(PATHS.sass.watch, sass);
+    wTask(PATHS.scripts.watch, script);
+}
+function wTask(path, tsk){
+    gulp.watch(path).on('all', gulp.series(tsk, reload));
+}
 
 gulp.task('build',
     gulp.series(clean, gulp.parallel(html, sass, script, images, copy)));
 
-gulp.task('default', gulp.series('build', server));
+gulp.task('default', gulp.series('build', server, watchTasks));

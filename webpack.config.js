@@ -5,6 +5,8 @@ module.exports = {
         path: __dirname + "/dist"
     },
 
+    devtool: "source-map",
+
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js", ".json"]
@@ -33,7 +35,12 @@ module.exports = {
                         loader: 'babel-loader'
                     }
                 ]
+            },
+            { 
+                enforce: "pre", 
+                test: /\.ts$/, 
+                loader: "source-map-loader" 
             }
-        ]
-    }
+        ]//rules
+    }//module
 };

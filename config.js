@@ -46,7 +46,7 @@ export default {
             src: [
                 "src/assets/**/*",
                 "!src/assets/scss",
-                "!src/assets/{img,js,scss}/**/*"
+                "!src/assets/{images,js,scss}/**/*"
             ],
             dest: _destinationFolder
         },
@@ -55,11 +55,13 @@ export default {
                 "node_modules/foundation-sites/scss",
                 "node_modules/motion-ui/src"
             ],
-            src: "src/assets/scss/app.scss",
+            watch: 'src/assets/scss/**/*',
+            src: 'src/assets/scss/app.scss',
             dest: _destinationFolder + '/css'
         },
         //entries -> scripts
         scripts: {
+            watch: 'src/assets/js/**/*',
             src: [
                 //"src/assets/js/app.js",
                 "src/assets/js/main.ts"
@@ -71,7 +73,7 @@ export default {
             dest: _destinationFolder
         },
         images: {
-            src: ['src/assets/img/**/*'],
+            src: ['src/assets/images/**/*'],
             dest: _destinationFolder + '/images'
         }
     }

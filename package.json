@@ -35,6 +35,7 @@
     "gulp-uncss": "^1.0.6",
     "panini": "^1.5.1",
     "rimraf": "^2.6.2",
+    "source-map-loader": "^0.2.3",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
     "vinyl-named": "^1.1.0",

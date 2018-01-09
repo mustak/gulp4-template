@@ -1,4 +1,5 @@
 {
 	"presets": ["env"],
-  "compact": false
+  "compact": "false",
+  "sourceMaps": true
 }
