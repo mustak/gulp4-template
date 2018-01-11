@@ -51,26 +51,34 @@ export default {
             dest: _destinationFolder
         },
         sass: {
+            src: 'src/assets/scss/app.scss',
+            dest: _destinationFolder + '/css',
             resolve: [
                 "node_modules/foundation-sites/scss",
                 "node_modules/motion-ui/src"
             ],
-            watch: 'src/assets/scss/**/*',
-            src: 'src/assets/scss/app.scss',
-            dest: _destinationFolder + '/css'
+            watch: 'src/assets/scss/**/*'
         },
         //entries -> scripts
         scripts: {
-            watch: 'src/assets/js/**/*',
             src: [
                 //"src/assets/js/app.js",
                 "src/assets/js/main.ts"
             ],
-            dest: _destinationFolder + '/js'
+            dest: _destinationFolder + '/js',
+            watch: 'src/assets/js/**/*'
         },
         html: {
-            src: ['src/pages/**/*.{html,hbs,handlebars}'],
-            dest: _destinationFolder
+            src: ['src/html/pages/**/*.{html,hbs,handlebars}'],
+            dest: _destinationFolder,
+            paniniInit: {
+                root: 'src/html/pages/',
+                layouts: 'src/html/layouts/',
+                partials: 'src/html/partials/',
+                data: 'src/html/data/',
+                helpers: 'src/html/helpers/'
+            },
+            watch: 'src/html/{layouts,partials,data,helpers}/**/*.html'
         },
         images: {
             src: ['src/assets/images/**/*'],

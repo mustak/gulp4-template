@@ -27,13 +27,7 @@ function copy() {
 // Main Tasks
 function html() {
     return gulp.src(PATHS.html.src)
-        .pipe(panini({
-            root: 'src/pages/',
-            layouts: 'src/layouts/',
-            partials: 'src/partials/',
-            data: 'src/data/',
-            helpers: 'src/helpers/'
-        }))
+        .pipe(panini(PATHS.html.paniniInit))
         .pipe(gulp.dest(PATHS.html.dest));
 }
 
@@ -85,11 +79,18 @@ function reload(done) {
     browser.reload();
     done();
 }
+function reloadPanini(done) {
+    panini.refresh();
+    html();
+    done();
+  }
 function watchTasks() {
     wTask(PATHS.assets.src, copy);
     wTask(PATHS.images.src, images);
     wTask(PATHS.sass.watch, sass);
     wTask(PATHS.scripts.watch, script);
+    wTask(PATHS.html.src, html);
+    wTask(PATHS.html.watch, reloadPanini)
 }
 function wTask(path, tsk){
     gulp.watch(path).on('all', gulp.series(tsk, reload));
