@@ -6,6 +6,7 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp build --production",
+       "js": "gulp js",
     "clean": "gulp clean"
   },
   "repository": {
@@ -19,6 +20,7 @@
   "author": "mustak",
   "license": "ISC",
   "devDependencies": {
+    "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",

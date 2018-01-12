@@ -8,6 +8,7 @@ import config from './config';
 import panini from 'panini';
 import webpackStream from 'webpack-stream';
 import webpack3 from 'webpack';
+import webpackConfig from './webpack.config.js';
 import named from 'vinyl-named';
 import browser from 'browser-sync';
 
@@ -49,7 +50,7 @@ function sass() {
 function script() {
     return gulp.src(PATHS.scripts.src)
         .pipe(named())
-        .pipe(webpackStream(null, webpack3))
+        .pipe(webpackStream(webpackConfig, webpack3))
         .pipe($.sourcemaps.init())
         .pipe($.if(PRODUCTION, $.uglify()
             .on('error', e => { console.log(e); })
@@ -93,10 +94,12 @@ function watchTasks() {
     wTask(PATHS.html.watch, reloadPanini)
 }
 function wTask(path, tsk){
-    gulp.watch(path).on('all', gulp.series(tsk, reload));
+    //gulp.watch(path).on('all', gulp.series(tsk, reload));
+    gulp.watch(path).on('all', gulp.series(tsk));
 }
 
 gulp.task('build',
     gulp.series(clean, gulp.parallel(html, sass, script, images, copy)));
 
 gulp.task('default', gulp.series('build', server, watchTasks));
+gulp.task('js', gulp.series(clean, script, watchTasks));

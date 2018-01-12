@@ -1,11 +1,11 @@
 module.exports = {
-    entry: "./src/index.tsx",
-    output: {
-        filename: "bundle.js",
-        path: __dirname + "/dist"
-    },
+    // entry: "./src/assets/js/main.ts",
+    // output: {
+    //     filename: "main.js",
+    //     path: __dirname + "/dist"
+    // },
 
-    devtool: "source-map",
+    // devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -23,7 +23,7 @@ module.exports = {
                         loader: 'babel-loader'
                     },
                     {
-                        loader: 'ts-loader'
+                        loader: 'awesome-typescript-loader'
                     }
                 ]
             },
