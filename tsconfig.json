@@ -7,6 +7,7 @@
         "target": "es6",
         "sourceMap": true,
         "moduleResolution": "node",
-        "module": "es6"
+        "module": "es6",
+        "outDir": "./build"
     }
 }

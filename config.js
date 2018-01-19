@@ -1,7 +1,7 @@
 const _destinationFolder = 'build';
 const _src = 'src';
 export default {
-    PORT: 8000,
+    PORT: 8080,
     COMPATIBILITY: [
         "last 2 versions",
         "ie >= 9",

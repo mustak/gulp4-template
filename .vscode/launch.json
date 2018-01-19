@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}/build",
+            "runtimeExecutable": "/snap/bin/chromium"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "gulp3:Launch Program",
+            "program": "${workspaceFolder}/src/assets/js/main.ts",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+    ],
+    "compounds": []
+}
